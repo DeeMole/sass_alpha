@@ -7,9 +7,13 @@ class ContactsController < ApplicationController
         
         @contact = Contact.new(contact_params)
         if @contact.save
-            redirect_to new_contact_path, notice: "Message Sent!"
+            
+            flash[:success] = "Message sent."
+            redirect_to new_contact_path                  # , notice: "Message Sent!"
         else
-            redirect_to new_contact_path, notice: "Message Error."
+            
+            flash[:error] = @contact.errors.full_messages.join(", ")
+            redirect_to new_contact_path                # , notice: "Message Error."
         end
         
     end
